@@ -87,12 +87,12 @@ app.use(function(req,res,next){
     computer_name:String,
     image_path: String,
   }); 
-  var upload = multer({ dest: './images/' });
+  
  app.post('/adddetail',function (req, res) {
  // res.header("Content-Type", "application/json");
         console.log("request body");
         console.log(req.body);
-     
+        var upload = multer({ dest: './images/' });
       var Computer = mongoose.model('Computer', Computerschema, 'computer_data');
      // var image_name = "./images/"+req.body.computer_name;
      // console.log(req.body.RAM);
@@ -110,7 +110,7 @@ app.use(function(req,res,next){
         Computer1.save(function (err, Computer) {
           if (err) return console.error(err);
           console.log(" saved to collection.");
-          res.write(" data seved.");
+          res.write(" data seved.<form action='/' > Back to Home : <input type='submit' value='Add Computer'></form> ");
           return res.end();
         }); 
       // db.computer_data.insertMany({

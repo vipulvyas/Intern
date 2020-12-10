@@ -8,6 +8,7 @@ var path = require('path');
 var multer = require('multer');
 var https = require('https');
 var cors = require('cors');
+
 var mongoose = require('mongoose');
 var app = express();
 var LocalStorage = require('node-localstorage').LocalStorage,
@@ -24,7 +25,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/computercompair',{useNewUrlParser:tr
 
 
 mongoose.set('useCreateIndex',true);
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 app.use(cors());
@@ -43,6 +45,8 @@ app.use(function(req,res,next){
    next();
  });
 
+ 
+
 
  app.get("/", (req, res) => {
    res.sendFile(__dirname + "/index.html");
@@ -50,31 +54,29 @@ app.use(function(req,res,next){
   });
   var db = mongoose.connection; 
 
- //app.get('/add',function(req,res){
+  
    
   app.get('/add', function(req, res) {
-    //res.header("Content-Type", "application/json");
+   
     res.sendFile('add.html', {root: __dirname })
 });
-   //res.writeHead(200, {'Content-Type': 'text/html'});
-  //  res.write('<pre><form action="adddetail" method="post" enctype="multipart/form-data">');
-  //  res.write('choose Image    :<input type="image" name="image"><br>');
-  //  res.write('Computer Name   :<input type="text" name="Computer_name"><br>');
-  //  res.write('RAM             :<input type="number" name="RAM"><br>');
-  //  res.write('CPU Speed       :<input type="number" name="CPU_speed"><br>');
-  //  res.write('harddisk        :<input type="number" name="harddisk"><br>');
-  //  res.write('storage Size    :<input type="number" name="storage_size"><br>');
-  //  res.write('no of USB ports :<input type="number" name="no_Of_USB_ports"><br>');
-  //  res.write('Price           :<input type="number" name="price"><br>');
-  //  res.write('Screen Size     :<input type="number" name="screen_size"><br></pre>');
-  //  res.write('<input type="submit">');
-  //  res.write('</form>');
-  // return res.end();
-// });
+app.post('/addphoto', function(req, res) {
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
+    var oldpath = files.image.path;
+    var newpath = './images/' + files.image.name;
+    fs.rename(oldpath, newpath, function (err) {
+      if (err) throw err;
+     // res.write('File uploaded and moved!');
+      //res.end();
+    });
+});
+  res.sendFile('add.html', {root: __dirname })
+});
 
  console.log("\ninside app.js file\n");
  
-  // define Schema
+  
   var Computerschema = mongoose.Schema({
     image: String,
     RAM:Number, 
@@ -87,15 +89,14 @@ app.use(function(req,res,next){
     computer_name:String,
     image_path: String,
   }); 
-  var upload = multer({ dest: './images/' });
+
  app.post('/adddetail',function (req, res) {
- // res.header("Content-Type", "application/json");
+
         console.log("request body");
         console.log(req.body);
-     
+        
       var Computer = mongoose.model('Computer', Computerschema, 'computer_data');
-     // var image_name = "./images/"+req.body.computer_name;
-     // console.log(req.body.RAM);
+     
       var Computer1 = new Computer({ 
         image:req.body.image,
         RAM:req.body.RAM, 
@@ -110,29 +111,11 @@ app.use(function(req,res,next){
         Computer1.save(function (err, Computer) {
           if (err) return console.error(err);
           console.log(" saved to collection.");
-          res.write(" data seved.");
-          return res.end();
+          res.sendFile('complete.html', {root: __dirname });
+           
+          //return res.end();
         }); 
-      // db.computer_data.insertMany({
-      //    RAM:req.body.RAM, 
-      //    CPU_speed:req.body.CPU_speed, 
-      //    harddisk:req.body.harddisk, 
-      //    storage_size:req.body.storage_size, 
-      //    no_Of_USB_ports:req.body.no_Of_USB_ports, 
-      //    price:req.body.price,
-      //    screen_size:req.body.screen_size,
-      //    image_path: "./images/"+req.body.image_name,
-      // },function(err, res) {
-      //    if(err)
-      //    {
-      //      localStorage.setItem('status','false');
-      //      console.log(err);
-      //      console.log('res from upload');
-      //    }
-      //    else{
-      //      localStorage.setItem('status','true');
-      //    }
-      //  });
+      
    
 
  });

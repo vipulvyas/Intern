@@ -1,8 +1,11 @@
 <html><head></head><body>
     
 
-  <pre><form action="adddetail" method="post" >
-choose Image    :<input type="file" name="image"><br>
+  <pre><form action="addphoto" method="post" enctype="multipart/form-data">
+    choose Image    :<input type="file" name="image" >        <input type="Submit" placeholder="Upload">
+  </form></pre>
+    
+  <pre><form action="adddetail" method="post">
 Computer Name   :<input type="text" name="computer_name"><br>
 RAM             :<input type="number" id= "RAM" name="RAM"><br>
 CPU Speed       :<input type="number" name="CPU_speed"><br>
