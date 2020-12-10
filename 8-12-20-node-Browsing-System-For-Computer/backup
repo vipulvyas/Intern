@@ -3,6 +3,9 @@ console.log('Started............');
 var express = require('express');
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path');
+var multer = require('multer');
 var https = require('https');
 var cors = require('cors');
 var mongoose = require('mongoose');
@@ -10,20 +13,19 @@ var app = express();
 var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./images');
 mongoose.Promise = global.Promise;
-
+//app.use(bodyParser.json())
 mongoose.connect('mongodb://127.0.0.1:27017/computercompair',{useNewUrlParser:true},(err)=>{
 
   if(err) { console.log('Can not connect to the database'+ err);}
   else{
-    console.log('======= connection established to the database==========');
+    console.log('=========== connection established to the database==========');
   }
 });
 
 
 mongoose.set('useCreateIndex',true);
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
-app.use(bodyParser.raw());
+app.use(bodyParser.urlencoded({extended:true}));
+
 
 app.use(cors());
 const port = process.env.PORT || 3000;
@@ -37,72 +39,103 @@ app.use(function(req,res,next){
    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTIONS,PATCH');
    res.header('ACCESS_Control-Allow-Headers','*');
   
-   if('OPTIONS' === req.method)
-   {
-     return res.sendStatus(200);
-   }
+
    next();
  });
- app.get('/',function(req,res){
+
+
+ app.get("/", (req, res) => {
+   res.sendFile(__dirname + "/index.html");
+   //return res.end();
+  });
+  var db = mongoose.connection; 
+
+ //app.get('/add',function(req,res){
    
-   res.write('<form action="add" method="post" enctype="multipart/form-data">');
-   res.write('<input type="submit">');
+  app.get('/add', function(req, res) {
+    //res.header("Content-Type", "application/json");
+    res.sendFile('add.html', {root: __dirname })
+});
+   //res.writeHead(200, {'Content-Type': 'text/html'});
+  //  res.write('<pre><form action="adddetail" method="post" enctype="multipart/form-data">');
+  //  res.write('choose Image    :<input type="image" name="image"><br>');
+  //  res.write('Computer Name   :<input type="text" name="Computer_name"><br>');
+  //  res.write('RAM             :<input type="number" name="RAM"><br>');
+  //  res.write('CPU Speed       :<input type="number" name="CPU_speed"><br>');
+  //  res.write('harddisk        :<input type="number" name="harddisk"><br>');
+  //  res.write('storage Size    :<input type="number" name="storage_size"><br>');
+  //  res.write('no of USB ports :<input type="number" name="no_Of_USB_ports"><br>');
+  //  res.write('Price           :<input type="number" name="price"><br>');
+  //  res.write('Screen Size     :<input type="number" name="screen_size"><br></pre>');
+  //  res.write('<input type="submit">');
+  //  res.write('</form>');
+  // return res.end();
+// });
 
-   res.write('</from>');
-   res.json({
-      status:false
-    });
- });
+ console.log("\ninside app.js file\n");
+ 
+  // define Schema
+  var Computerschema = mongoose.Schema({
+    image: String,
+    RAM:Number, 
+    CPU_speed:Number, 
+    harddisk:Number, 
+    storage_size:Number, 
+    no_Of_USB_ports:Number, 
+    price:Number,
+    screen_size:Number,
+    computer_name:String,
+    image_path: String,
+  }); 
+  var upload = multer({ dest: './images/' });
+ app.post('/adddetail',function (req, res) {
+ // res.header("Content-Type", "application/json");
+        console.log("request body");
+        console.log(req.body);
+     
+      var Computer = mongoose.model('Computer', Computerschema, 'computer_data');
+     // var image_name = "./images/"+req.body.computer_name;
+     // console.log(req.body.RAM);
+      var Computer1 = new Computer({ 
+        image:req.body.image,
+        RAM:req.body.RAM, 
+        CPU_speed:req.body.CPU_speed, 
+        harddisk:req.body.harddisk, 
+        storage_size:req.body.storage_size, 
+        no_Of_USB_ports:req.body.no_Of_USB_ports, 
+        price:req.body.price,
+        screen_size:req.body.screen_size,
+        image_path: "./images/"+req.body.computer_name, });
 
- console.log("\ninside server.js file\n");
-
- app.post('/add',function (req, res) {
-
-   if (req.url == '/add') {
-      var form = new formidable.IncomingForm();
-      form.parse(req, function (err, fields, files) {
-         computer_data.insertMany({
-            RAM:req.body.RAM, 
-            CPU_speed:req.body.CPU_speed, 
-            harddisk:req.body.harddisk, 
-            storage_size:req.body.storage_size, 
-            no_Of_USB_ports:req.body.no_Of_USB_ports, 
-            price:req.body.price,
-            screen_size:req.body.screen_size,
-         },function(err, res) {
-            if(err)
-            {
-              localStorage.setItem('status','false');
-              console.log(err);
-              console.log('res from upload');
-            }
-            else{
-              localStorage.setItem('status','true');
-            }
-          });
-        res.write('Added Successfully');
-        res.end();
-        
-      });
-    } else {
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      res.write('<form action="add" method="post" enctype="multipart/form-data">');
-      res.write('<input type="file" name="filetoupload"><br>');
-      res.write('<input type="text" name="RAM"><br>');
-      res.write('<input type="text" name="CPU_speed"><br>');
-      res.write('<input type="text" name="harddisk"><br>');
-      res.write('<input type="text" name="storage_size"><br>');
-      res.write('<input type="text" name="no_Of_USB_ports"><br>');
-      res.write('<input type="text" name="price"><br>');
-      res.write('<input type="text" name="screen_size"><br>');
-      res.write('<input type="submit">');
-      res.write('</form>');
-      return res.end();
-    }
+        Computer1.save(function (err, Computer) {
+          if (err) return console.error(err);
+          console.log(" saved to collection.");
+          res.write(" data seved.");
+          return res.end();
+        }); 
+      // db.computer_data.insertMany({
+      //    RAM:req.body.RAM, 
+      //    CPU_speed:req.body.CPU_speed, 
+      //    harddisk:req.body.harddisk, 
+      //    storage_size:req.body.storage_size, 
+      //    no_Of_USB_ports:req.body.no_Of_USB_ports, 
+      //    price:req.body.price,
+      //    screen_size:req.body.screen_size,
+      //    image_path: "./images/"+req.body.image_name,
+      // },function(err, res) {
+      //    if(err)
+      //    {
+      //      localStorage.setItem('status','false');
+      //      console.log(err);
+      //      console.log('res from upload');
+      //    }
+      //    else{
+      //      localStorage.setItem('status','true');
+      //    }
+      //  });
    
 
  });
-
 
 
 

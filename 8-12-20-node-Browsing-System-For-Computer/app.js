@@ -3,6 +3,9 @@ console.log('Started............');
 var express = require('express');
 var bodyParser = require('body-parser');
 var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path');
+var multer = require('multer');
 var https = require('https');
 var cors = require('cors');
 var mongoose = require('mongoose');
@@ -10,7 +13,7 @@ var app = express();
 var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./images');
 mongoose.Promise = global.Promise;
-app.use(bodyParser.json())
+//app.use(bodyParser.json())
 mongoose.connect('mongodb://127.0.0.1:27017/computercompair',{useNewUrlParser:true},(err)=>{
 
   if(err) { console.log('Can not connect to the database'+ err);}
@@ -19,10 +22,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/computercompair',{useNewUrlParser:tr
   }
 });
 
+
 mongoose.set('useCreateIndex',true);
-app.use(bodyParser.urlencoded({extended:false}));
-//app.use(bodyParser.json());
-//app.use(bodyParser.raw());
+app.use(bodyParser.urlencoded({extended:true}));
+
 
 app.use(cors());
 const port = process.env.PORT || 3000;
@@ -43,14 +46,14 @@ app.use(function(req,res,next){
 
  app.get("/", (req, res) => {
    res.sendFile(__dirname + "/index.html");
-   return res.end();
+   //return res.end();
   });
   var db = mongoose.connection; 
 
  //app.get('/add',function(req,res){
    
   app.get('/add', function(req, res) {
-    res.header("Content-Type", "application/json");
+    //res.header("Content-Type", "application/json");
     res.sendFile('add.html', {root: __dirname })
 });
    //res.writeHead(200, {'Content-Type': 'text/html'});
@@ -73,7 +76,8 @@ app.use(function(req,res,next){
  
   // define Schema
   var Computerschema = mongoose.Schema({
-    RAM:String, 
+    image: String,
+    RAM:Number, 
     CPU_speed:Number, 
     harddisk:Number, 
     storage_size:Number, 
@@ -81,14 +85,19 @@ app.use(function(req,res,next){
     price:Number,
     screen_size:Number,
     computer_name:String,
+    image_path: String,
   }); 
+  var upload = multer({ dest: './images/' });
  app.post('/adddetail',function (req, res) {
-  res.header("Content-Type", "application/json");
+ // res.header("Content-Type", "application/json");
         console.log("request body");
         console.log(req.body);
      
       var Computer = mongoose.model('Computer', Computerschema, 'computer_data');
+     // var image_name = "./images/"+req.body.computer_name;
+     // console.log(req.body.RAM);
       var Computer1 = new Computer({ 
+        image:req.body.image,
         RAM:req.body.RAM, 
         CPU_speed:req.body.CPU_speed, 
         harddisk:req.body.harddisk, 
