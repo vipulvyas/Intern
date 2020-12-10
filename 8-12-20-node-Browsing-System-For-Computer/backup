@@ -1,0 +1,108 @@
+console.log('Started............');
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var formidable = require('formidable');
+var https = require('https');
+var cors = require('cors');
+var mongoose = require('mongoose');
+var app = express();
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./images');
+mongoose.Promise = global.Promise;
+
+mongoose.connect('mongodb://127.0.0.1:27017/computercompair',{useNewUrlParser:true},(err)=>{
+
+  if(err) { console.log('Can not connect to the database'+ err);}
+  else{
+    console.log('======= connection established to the database==========');
+  }
+});
+
+
+mongoose.set('useCreateIndex',true);
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
+
+app.use(cors());
+const port = process.env.PORT || 3000;
+
+const server = app.listen(port, function(){
+ console.log('Listening on port ' + port);
+});
+
+app.use(function(req,res,next){
+   res.header('Access-Control-Allow-Origin','*');
+   res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTIONS,PATCH');
+   res.header('ACCESS_Control-Allow-Headers','*');
+  
+   if('OPTIONS' === req.method)
+   {
+     return res.sendStatus(200);
+   }
+   next();
+ });
+ app.get('/',function(req,res){
+   
+   res.write('<form action="add" method="post" enctype="multipart/form-data">');
+   res.write('<input type="submit">');
+
+   res.write('</from>');
+   res.json({
+      status:false
+    });
+ });
+
+ console.log("\ninside server.js file\n");
+
+ app.post('/add',function (req, res) {
+
+   if (req.url == '/add') {
+      var form = new formidable.IncomingForm();
+      form.parse(req, function (err, fields, files) {
+         computer_data.insertMany({
+            RAM:req.body.RAM, 
+            CPU_speed:req.body.CPU_speed, 
+            harddisk:req.body.harddisk, 
+            storage_size:req.body.storage_size, 
+            no_Of_USB_ports:req.body.no_Of_USB_ports, 
+            price:req.body.price,
+            screen_size:req.body.screen_size,
+         },function(err, res) {
+            if(err)
+            {
+              localStorage.setItem('status','false');
+              console.log(err);
+              console.log('res from upload');
+            }
+            else{
+              localStorage.setItem('status','true');
+            }
+          });
+        res.write('Added Successfully');
+        res.end();
+        
+      });
+    } else {
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.write('<form action="add" method="post" enctype="multipart/form-data">');
+      res.write('<input type="file" name="filetoupload"><br>');
+      res.write('<input type="text" name="RAM"><br>');
+      res.write('<input type="text" name="CPU_speed"><br>');
+      res.write('<input type="text" name="harddisk"><br>');
+      res.write('<input type="text" name="storage_size"><br>');
+      res.write('<input type="text" name="no_Of_USB_ports"><br>');
+      res.write('<input type="text" name="price"><br>');
+      res.write('<input type="text" name="screen_size"><br>');
+      res.write('<input type="submit">');
+      res.write('</form>');
+      return res.end();
+    }
+   
+
+ });
+
+
+
+

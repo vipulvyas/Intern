@@ -1,0 +1,6 @@
+sudo rm /var/lib/mongodb/mongod.lock
+sudo mongod --dbpath /var/lib/mongodb/ --repair
+sudo mongod --dbpath /var/lib/mongodb/ --journal
+(Make sure that you leave you terminal running in which you have run above lines, dont press 'Ctrl+c' or quit it.) Type the command to start mongo now in another window.
+
+H
