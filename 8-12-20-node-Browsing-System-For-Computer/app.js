@@ -67,8 +67,7 @@ app.post('/addphoto', function(req, res) {
     var newpath = './images/' + files.image.name;
     fs.rename(oldpath, newpath, function (err) {
       if (err) throw err;
-     // res.write('File uploaded and moved!');
-      //res.end();
+     
     });
 });
   res.sendFile('add.html', {root: __dirname })
@@ -115,9 +114,12 @@ app.post('/addphoto', function(req, res) {
            
           //return res.end();
         }); 
-      
-   
 
+        app.get("/compaire", (req, res) => {
+          res.sendFile(`${__dirname}/compaire.html`);
+          //return res.end();
+         });
+  
  });
 
 
