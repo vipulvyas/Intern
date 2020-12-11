@@ -23,6 +23,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/computercompair',{useNewUrlParser:tr
   }
 });
 
+// this is for add image folder where ejs choose files
+app.use(express.static('images'));
+// View engine setup 
+app.set('view engine', 'ejs'); 
+
 
 mongoose.set('useCreateIndex',true);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,6 +37,7 @@ app.use(bodyParser.json());
 app.use(cors());
 const port = process.env.PORT || 3000;
 
+//listen
 const server = app.listen(port, function(){
  console.log('Listening on port ' + port);
 });
@@ -47,6 +53,7 @@ app.use(function(req,res,next){
 
  
 
+ //Home
 
  app.get("/", (req, res) => {
    res.sendFile(__dirname + "/index.html");
@@ -55,23 +62,14 @@ app.use(function(req,res,next){
   var db = mongoose.connection; 
 
   
+
+  //add
    
   app.get('/add', function(req, res) {
    
     res.sendFile('add.html', {root: __dirname })
 });
-app.post('/addphoto', function(req, res) {
-  var form = new formidable.IncomingForm();
-  form.parse(req, function (err, fields, files) {
-    var oldpath = files.image.path;
-    var newpath = './images/' + files.image.name;
-    fs.rename(oldpath, newpath, function (err) {
-      if (err) throw err;
-     
-    });
-});
-  res.sendFile('add.html', {root: __dirname })
-});
+
 
  console.log("\ninside app.js file\n");
  
@@ -86,26 +84,32 @@ app.post('/addphoto', function(req, res) {
     price:Number,
     screen_size:Number,
     computer_name:String,
-    image_path: String,
+    //computer_name: String,
   }); 
 
+  var Computer = mongoose.model('Computer', Computerschema, 'computer_data');
+
+  //add detail 
  app.post('/adddetail',function (req, res) {
 
         console.log("request body");
-        console.log(req.body);
         
-      var Computer = mongoose.model('Computer', Computerschema, 'computer_data');
+        var form = new formidable.IncomingForm();
+        form.parse(req, function (err, fields, files) {
+          console.log(fields);
+          console.log(files);
+          var Computer = mongoose.model('Computer', Computerschema, 'computer_data');
      
       var Computer1 = new Computer({ 
-        image:req.body.image,
-        RAM:req.body.RAM, 
-        CPU_speed:req.body.CPU_speed, 
-        harddisk:req.body.harddisk, 
-        storage_size:req.body.storage_size, 
-        no_Of_USB_ports:req.body.no_Of_USB_ports, 
-        price:req.body.price,
-        screen_size:req.body.screen_size,
-        image_path: "./images/"+req.body.computer_name, });
+        image:files.image.name,
+        RAM:fields.RAM, 
+        CPU_speed:fields.CPU_speed, 
+        harddisk:fields.harddisk, 
+        storage_size:fields.storage_size, 
+        no_Of_USB_ports:fields.no_Of_USB_ports, 
+        price:fields.price,
+        screen_size:fields.screen_size,
+        computer_name: fields.computer_name, });
 
         Computer1.save(function (err, Computer) {
           if (err) return console.error(err);
@@ -114,13 +118,26 @@ app.post('/addphoto', function(req, res) {
            
           //return res.end();
         }); 
-
+          var oldpath = files.image.path;
+          var newpath = './images/' + files.image.name;
+          fs.rename(oldpath, newpath, function (err) {
+            if (err) throw err;
+           
+          });
+          
+      }); 
+    });
+    
+      // compaire
         app.get("/compaire", (req, res) => {
-          res.sendFile(`${__dirname}/compaire.html`);
-          //return res.end();
+          console.log('in compair route')
+
+            
+               var computerData=Computer.find({});
+               computerData.exec(function(err, data){
+                console.log(data);
+                   if(err) throw err;
+                   res.render('compaire',{comdata: data});
+               })
          });
-  
- });
-
-
-
+         

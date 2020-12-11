@@ -1,0 +1,78 @@
+
+<head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    
+    </style>
+    </head>
+<button id="chengetocompaire"  onclick="compaire()">Click me</button><br></br>
+<div id= "computer_list">
+<% comdata.forEach(function(cdata) { %>
+    <img src="<%= cdata.image%>" height="300" width="300">  <br><pre><%= cdata.computer_name %>       <input type="checkbox" id="computer" name="select_computer" value="<%= cdata.computer_name %>"></pre><br><br><br>
+<% }); %>
+</div>
+<div id="output" class="output" ></div>
+
+<script>
+    
+    function compaire() {
+       
+        var x = document.getElementById("computer_list");
+        x.style.display = "none";
+        var y = document.getElementById("chengetocompaire");
+        y.style.display = "none";
+        var z = document.getElementById("output");
+        z.style.display = "block";
+
+        //create array which contain the selected computer
+        var array = []
+        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+        for (var i = 0; i < checkboxes.length; i++) {
+        array.push(checkboxes[i].value)
+        
+        console.log("<%= comdata[0].computer_name%>");
+
+        
+        //compaired data
+        document.getElementById("output").innerHTML = " <div > <strong>" + array[0] + " </strong>vs <strong>"+ array[1] + "</strong><br><br><br><table>"+
+            "<tr>"+
+                "<th>Category</th>"+
+                "<th>"+array[0]+"</th>"+
+                "<th>"+array[1]+"</th>"+
+                "<th>Difference</th>"+
+            "</tr>"+
+            
+
+            "<tr>"+
+                "<td>Alfreds Futterkiste</td>"+
+                "<td>Maria Anders</td>"+
+                "<td>Germany</td>"+
+                "<td>Difference</td>"+
+            "</tr>"+
+            "<% }); %>"+
+            "</table></div>"; 
+
+        }
+
+
+        
+    }
+    
+
+
+</script>
