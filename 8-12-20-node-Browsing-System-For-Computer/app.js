@@ -15,6 +15,8 @@ var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./images');
 mongoose.Promise = global.Promise;
 //app.use(bodyParser.json())
+
+
 mongoose.connect('mongodb://127.0.0.1:27017/computercompair',{useNewUrlParser:true},(err)=>{
 
   if(err) { console.log('Can not connect to the database'+ err);}
@@ -32,6 +34,7 @@ app.set('view engine', 'ejs');
 mongoose.set('useCreateIndex',true);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 
 
 app.use(cors());
@@ -117,7 +120,7 @@ app.use(function(req,res,next){
           res.sendFile('complete.html', {root: __dirname });
            
           //return res.end();
-        }); 
+          }); 
           var oldpath = files.image.path;
           var newpath = './images/' + files.image.name;
           fs.rename(oldpath, newpath, function (err) {
@@ -140,4 +143,18 @@ app.use(function(req,res,next){
                    res.render('compaire',{comdata: data});
                })
          });
+
+  app.post('/compaireddata', function(req, res) {
+   
+          console.log(req.body.select_computer);
+          var query = { $or : [ {computer_name: req.body.select_computer[0] },{computer_name: req.body.select_computer[1] }] };
+          var computerData=Computer.find(query);
+          computerData.exec(function(err, data){
+            //console.log("         sdasdasd                  ===========================================");
+                console.log(data);
+                   if(err) throw err;
+                   res.render('compaireddata',{comdata: data});
+                 //res.end;  
+          })
+    });
          

@@ -1,4 +1,4 @@
-<hrml>
+
 <head>
     <style>
     table {
@@ -20,19 +20,15 @@
     
     </style>
     </head>
-    <body>
-<!-- <button id="chengetocompaire"  onclick="compaire()">Click me</button><br></br> -->
-<form action="/compaireddata" method="post" >
-    <input type="submit" value="compaire"><br><br>
+<button id="chengetocompaire"  onclick="compaire()">Click me</button><br></br>
 <div id= "computer_list">
 <% comdata.forEach(function(cdata) { %>
     <img src="<%= cdata.image%>" height="300" width="300">  <br><pre><%= cdata.computer_name %>       <input type="checkbox" id="computer" name="select_computer" value="<%= cdata.computer_name %>"></pre><br><br><br>
 <% }); %>
 </div>
-</form>
-<!-- <div id="output" class="output" ></div> -->
+<div id="output" class="output" ></div>
 
-<!-- <script>
+<script>
     
     function compaire() {
        
@@ -44,18 +40,15 @@
         z.style.display = "block";
 
         //create array which contain the selected computer
-        var array = []
+        var array = [];
         var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
         for (var i = 0; i < checkboxes.length; i++) {
-        array.push(checkboxes[i].value)
+        array.push(checkboxes[i].value);
         
         //console.log("<%= comdata[0].computer_name%>");
-        var cp = '<%= JSON.stringify(comdata) %>';
-        console.log(cp);
+
         
         //compaired data
-       
-        
         document.getElementById("output").innerHTML = " <div > <strong>" + array[0] + " </strong>vs <strong>"+ array[1] + "</strong><br><br><br><table>"+
             "<tr>"+
                 "<th>Category</th>"+
@@ -63,14 +56,16 @@
                 "<th>"+array[1]+"</th>"+
                 "<th>Difference</th>"+
             "</tr>"+
-           
+            
+
             "<tr>"+
                 "<td>Alfreds Futterkiste</td>"+
                 "<td>Maria Anders</td>"+
                 "<td>Germany</td>"+
-                "<th>Difference</th>"+
+                "<td>Difference</td>"+
             "</tr>"+
-            "</table></div>"+ cp; 
+            "<% }); %>"+
+            "</table></div>"; 
 
         }
 
@@ -80,6 +75,4 @@
     
 
 
-</script> -->
-
-</body></hrml>
+</script>

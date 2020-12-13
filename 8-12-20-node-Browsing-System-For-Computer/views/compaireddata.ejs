@@ -1,0 +1,87 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2><%= comdata[0].computer_name%> VS <%= comdata[1].computer_name%></h2>
+
+<table>
+
+  <tr>
+    <th>Property</th>
+    <th><%= comdata[0].computer_name%></th>
+    <th><%= comdata[1].computer_name%></th>
+    <th>Difference</th>
+  </tr>
+ 
+    
+        <tr>
+            <td>RAM</td>
+            <td><%= comdata[0].RAM %></td>
+            <td><%= comdata[1].RAM %></td>
+            <td><%= comdata[0].RAM - comdata[1].RAM%></td>
+        </tr>
+        <tr>
+            <td>CPU Speed</td>
+            <td><%= comdata[0].CPU_speed %></td>
+            <td><%= comdata[1].CPU_speed %></td>
+            <td><%= comdata[0].CPU_speed - comdata[1].CPU_speed%></td>
+        </tr>
+        <tr>
+            <td>Hard Disk</td>
+            <td><%= comdata[0].harddisk %></td>
+            <td><%= comdata[1].harddisk %></td>
+            <td><%= comdata[0].harddisk - comdata[1].harddisk%></td>
+        </tr>
+        <tr>
+            <td>Storage Size</td>
+            <td><%= comdata[0].storage_size %></td>
+            <td><%= comdata[1].storage_size %></td>
+            <td><%= comdata[0].storage_size - comdata[1].storage_size %></td>
+        </tr>
+        <tr>
+            <td>Number Of Port</td>
+            <td><%= comdata[0].no_Of_USB_ports %></td>
+            <td><%= comdata[1].no_Of_USB_ports %></td>
+            <td><%= comdata[0].no_Of_USB_ports - comdata[1].no_Of_USB_ports %></td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><%= comdata[0].price %></td>
+            <td><%= comdata[1].price %></td>
+            <td><%= comdata[0].price - comdata[1].price %></td>
+        </tr>
+        <tr>
+            <td>Screen Size</td>
+            <td><%= comdata[0].screen_size %></td>
+            <td><%= comdata[1].screen_size %></td>
+            <td><%= comdata[0].screen_size - comdata[1].screen_size %></td>
+        </tr>
+   
+    
+  
+</table>
+
+</body>
+</html>
+
