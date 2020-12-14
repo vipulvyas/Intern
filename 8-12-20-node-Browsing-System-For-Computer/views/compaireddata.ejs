@@ -39,43 +39,71 @@ tr:nth-child(even) {
             <td>RAM</td>
             <td><%= comdata[0].RAM %></td>
             <td><%= comdata[1].RAM %></td>
-            <td><%= comdata[0].RAM - comdata[1].RAM%></td>
+            <td><% if ((comdata[0].RAM - comdata[1].RAM) > 0){%>
+               <%= comdata[0].RAM - comdata[1].RAM %>
+               <% } else {%>
+              <%= comdata[1].RAM - comdata[0].RAM %>
+              <% }%> </td>
         </tr>
         <tr>
             <td>CPU Speed</td>
             <td><%= comdata[0].CPU_speed %></td>
             <td><%= comdata[1].CPU_speed %></td>
-            <td><%= comdata[0].CPU_speed - comdata[1].CPU_speed%></td>
+            <td><% if ((comdata[0].CPU_speed - comdata[1].CPU_speed) > 0){%>
+              <%= comdata[0].CPU_speed - comdata[1].CPU_speed %>
+              <% } else {%>
+             <%= comdata[1].CPU_speed - comdata[0].CPU_speed %>
+             <% }%> </td>
         </tr>
         <tr>
             <td>Hard Disk</td>
             <td><%= comdata[0].harddisk %></td>
             <td><%= comdata[1].harddisk %></td>
-            <td><%= comdata[0].harddisk - comdata[1].harddisk%></td>
+            <td><% if ((comdata[0].harddisk - comdata[1].harddisk) > 0){%>
+              <%= comdata[0].harddisk - comdata[1].harddisk %>
+              <% } else {%>
+             <%= comdata[1].harddisk - comdata[0].harddisk %>
+             <% }%> </td>
         </tr>
         <tr>
             <td>Storage Size</td>
             <td><%= comdata[0].storage_size %></td>
             <td><%= comdata[1].storage_size %></td>
-            <td><%= comdata[0].storage_size - comdata[1].storage_size %></td>
+            <td><% if ((comdata[0].storage_size - comdata[1].storage_size) > 0){%>
+              <%= comdata[0].storage_size - comdata[1].storage_size %>
+              <% } else {%>
+             <%= comdata[1].storage_size - comdata[0].storage_size %>
+             <% }%> </td>
         </tr>
         <tr>
             <td>Number Of Port</td>
             <td><%= comdata[0].no_Of_USB_ports %></td>
             <td><%= comdata[1].no_Of_USB_ports %></td>
-            <td><%= comdata[0].no_Of_USB_ports - comdata[1].no_Of_USB_ports %></td>
+            <td><% if ((comdata[0].no_Of_USB_ports - comdata[1].no_Of_USB_ports) > 0){%>
+              <%= comdata[0].no_Of_USB_ports - comdata[1].no_Of_USB_ports %>
+              <% } else {%>
+             <%= comdata[1].no_Of_USB_ports - comdata[0].no_Of_USB_ports %>
+             <% }%> </td>
         </tr>
         <tr>
             <td>Price</td>
             <td><%= comdata[0].price %></td>
             <td><%= comdata[1].price %></td>
-            <td><%= comdata[0].price - comdata[1].price %></td>
+            <td><% if ((comdata[0].price - comdata[1].price) > 0){%>
+              <%= comdata[0].price - comdata[1].price %>
+              <% } else {%>
+             <%= comdata[1].price - comdata[0].price %>
+             <% }%> </td>
         </tr>
         <tr>
             <td>Screen Size</td>
             <td><%= comdata[0].screen_size %></td>
             <td><%= comdata[1].screen_size %></td>
-            <td><%= comdata[0].screen_size - comdata[1].screen_size %></td>
+            <td><% if ((comdata[0].screen_size - comdata[1].screen_size) > 0){%>
+              <%= comdata[0].screen_size - comdata[1].screen_size %>
+              <% } else {%>
+             <%= comdata[1].screen_size - comdata[0].screen_size %>
+             <% }%> </td>
         </tr>
    
     
