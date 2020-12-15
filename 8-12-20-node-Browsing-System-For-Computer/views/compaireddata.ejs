@@ -120,8 +120,8 @@ tr:nth-child(even) {
      var oCells = oTable.rows.item(1).cells;
 
      //gets amount of cells of current row
-     var cellLength = oCells.length;
-     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     //var cellLength = oCells.length;
+     if (parseInt(oCells.item(1).innerHTML) > parseInt(oCells.item(2).innerHTML))
      {
       document.getElementById("ram1").style.backgroundColor = "green";
      }
@@ -138,8 +138,8 @@ tr:nth-child(even) {
      var oCells = oTable.rows.item(2).cells;
 
      //gets amount of cells of current row
-     var cellLength = oCells.length;
-     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     //var cellLength = oCells.length;
+     if (parseInt(oCells.item(1).innerHTML) > parseInt(oCells.item(2).innerHTML))
      {
       document.getElementById("cpuspeed1").style.backgroundColor = "green";
      }
@@ -156,8 +156,8 @@ tr:nth-child(even) {
      var oCells = oTable.rows.item(3).cells;
 
      //gets amount of cells of current row
-     var cellLength = oCells.length;
-     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     //var cellLength = oCells.length;
+     if (parseInt(oCells.item(1).innerHTML) > parseInt(oCells.item(2).innerHTML))
      {
       document.getElementById("harddisk1").style.backgroundColor = "green";
      }
@@ -173,11 +173,9 @@ tr:nth-child(even) {
      }
      var oCells = oTable.rows.item(4).cells;
 
-     //gets amount of cells of current row
-     var cellLength = oCells.length;
-     //gets amount of cells of current row
-     var cellLength = oCells.length;
-     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+    
+     //var cellLength = oCells.length;
+     if (parseInt(oCells.item(1).innerHTML) > parseInt(oCells.item(2).innerHTML))
      {
       document.getElementById("storagesize1").style.backgroundColor = "green";
      }
@@ -193,8 +191,8 @@ tr:nth-child(even) {
      }
      var oCells = oTable.rows.item(5).cells;
      //gets amount of cells of current row
-     var cellLength = oCells.length;
-     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+    // var cellLength = oCells.length;
+     if (parseInt(oCells.item(1).innerHTML) > parseInt(oCells.item(2).innerHTML))
      {
       document.getElementById("port1").style.backgroundColor = "green";
      }
@@ -211,8 +209,8 @@ tr:nth-child(even) {
 
      var oCells = oTable.rows.item(6).cells;
      //gets amount of cells of current row
-     var cellLength = oCells.length;
-     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     //var cellLength = oCells.length;
+     if (parseInt(oCells.item(1).innerHTML) > parseInt(oCells.item(2).innerHTML))
      {
       document.getElementById("price1").style.backgroundColor = "green";
      }
@@ -232,8 +230,8 @@ tr:nth-child(even) {
      var oCells = oTable.rows.item(7).cells;
 
      //gets amount of cells of current row
-     var cellLength = oCells.length;
-     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     //var cellLength = oCells.length;
+     if (parseInt(oCells.item(1).innerHTML) > parseInt(oCells.item(2).innerHTML))
      {
       document.getElementById("screensize1").style.backgroundColor = "green";
      }
