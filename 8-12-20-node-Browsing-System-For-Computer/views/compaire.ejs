@@ -23,7 +23,7 @@
     <body>
 <!-- <button id="chengetocompaire"  onclick="compaire()">Click me</button><br></br> -->
 <form action="/compaireddata" method="post" >
-    <input type="submit" value="compaire"><br><br>
+    <input type="submit" style="color: rgb(0, 195, 255) ;" value="compaire"><br><br>
 <div id= "computer_list">
 <% comdata.forEach(function(cdata) { %>
     <img src="<%= cdata.image%>" height="300" width="300">  <br><pre><%= cdata.computer_name %>       <input type="checkbox" id="computer" name="select_computer" value="<%= cdata.computer_name %>"></pre><br><br><br>

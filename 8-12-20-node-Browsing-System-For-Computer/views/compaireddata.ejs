@@ -25,7 +25,7 @@ tr:nth-child(even) {
 
 <h2><%= comdata[0].computer_name%> VS <%= comdata[1].computer_name%></h2>
 
-<table>
+<table id = "myTable">
 
   <tr>
     <th>Property</th>
@@ -37,8 +37,8 @@ tr:nth-child(even) {
     
         <tr>
             <td>RAM</td>
-            <td><%= comdata[0].RAM %></td>
-            <td><%= comdata[1].RAM %></td>
+            <td id="ram1"><%= comdata[0].RAM %></td>
+            <td id="ram2"><%= comdata[1].RAM %></td>
             <td><% if ((comdata[0].RAM - comdata[1].RAM) > 0){%>
                <%= comdata[0].RAM - comdata[1].RAM %>
                <% } else {%>
@@ -47,8 +47,8 @@ tr:nth-child(even) {
         </tr>
         <tr>
             <td>CPU Speed</td>
-            <td><%= comdata[0].CPU_speed %></td>
-            <td><%= comdata[1].CPU_speed %></td>
+            <td id="cpuspeed1"><%= comdata[0].CPU_speed %></td>
+            <td id="cpuspeed2"><%= comdata[1].CPU_speed %></td>
             <td><% if ((comdata[0].CPU_speed - comdata[1].CPU_speed) > 0){%>
               <%= comdata[0].CPU_speed - comdata[1].CPU_speed %>
               <% } else {%>
@@ -57,8 +57,8 @@ tr:nth-child(even) {
         </tr>
         <tr>
             <td>Hard Disk</td>
-            <td><%= comdata[0].harddisk %></td>
-            <td><%= comdata[1].harddisk %></td>
+            <td id="harddisk1"><%= comdata[0].harddisk %></td>
+            <td id="harddisk2"><%= comdata[1].harddisk %></td>
             <td><% if ((comdata[0].harddisk - comdata[1].harddisk) > 0){%>
               <%= comdata[0].harddisk - comdata[1].harddisk %>
               <% } else {%>
@@ -67,8 +67,8 @@ tr:nth-child(even) {
         </tr>
         <tr>
             <td>Storage Size</td>
-            <td><%= comdata[0].storage_size %></td>
-            <td><%= comdata[1].storage_size %></td>
+            <td id="storagesize1"><%= comdata[0].storage_size %></td>
+            <td id="storagesize2"><%= comdata[1].storage_size %></td>
             <td><% if ((comdata[0].storage_size - comdata[1].storage_size) > 0){%>
               <%= comdata[0].storage_size - comdata[1].storage_size %>
               <% } else {%>
@@ -77,8 +77,8 @@ tr:nth-child(even) {
         </tr>
         <tr>
             <td>Number Of Port</td>
-            <td><%= comdata[0].no_Of_USB_ports %></td>
-            <td><%= comdata[1].no_Of_USB_ports %></td>
+            <td id="port1"><%= comdata[0].no_Of_USB_ports %></td>
+            <td id="port2"><%= comdata[1].no_Of_USB_ports %></td>
             <td><% if ((comdata[0].no_Of_USB_ports - comdata[1].no_Of_USB_ports) > 0){%>
               <%= comdata[0].no_Of_USB_ports - comdata[1].no_Of_USB_ports %>
               <% } else {%>
@@ -87,8 +87,8 @@ tr:nth-child(even) {
         </tr>
         <tr>
             <td>Price</td>
-            <td><%= comdata[0].price %></td>
-            <td><%= comdata[1].price %></td>
+            <td id="price1"><%= comdata[0].price %></td>
+            <td id="price2"><%= comdata[1].price %></td>
             <td><% if ((comdata[0].price - comdata[1].price) > 0){%>
               <%= comdata[0].price - comdata[1].price %>
               <% } else {%>
@@ -97,8 +97,8 @@ tr:nth-child(even) {
         </tr>
         <tr>
             <td>Screen Size</td>
-            <td><%= comdata[0].screen_size %></td>
-            <td><%= comdata[1].screen_size %></td>
+            <td id="screensize1"><%= comdata[0].screen_size %></td>
+            <td id="screensize2"><%= comdata[1].screen_size %></td>
             <td><% if ((comdata[0].screen_size - comdata[1].screen_size) > 0){%>
               <%= comdata[0].screen_size - comdata[1].screen_size %>
               <% } else {%>
@@ -109,7 +109,146 @@ tr:nth-child(even) {
     
   
 </table>
+<script>
+  //gets table
+  var oTable = document.getElementById('myTable');
 
+  //gets rows of table
+  //var rowLength = oTable.rows.length;
+
+
+     var oCells = oTable.rows.item(1).cells;
+
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     {
+      document.getElementById("ram1").style.backgroundColor = "green";
+     }
+     else if (oCells.item(1).innerHTML = oCells.item(2).innerHTML)
+     {
+      document.getElementById("ram2").style.backgroundColor = "green";
+      document.getElementById("ram1").style.backgroundColor = "green";
+     }
+     else
+     {
+      document.getElementById("ram2").style.backgroundColor = "green";
+
+     }
+     var oCells = oTable.rows.item(2).cells;
+
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     {
+      document.getElementById("cpuspeed1").style.backgroundColor = "green";
+     }
+     else if (oCells.item(1).innerHTML = oCells.item(2).innerHTML)
+     {
+      document.getElementById("cpuspeed1").style.backgroundColor = "green";
+      document.getElementById("cpuspeed2").style.backgroundColor = "green";
+     }
+     else
+     {
+      document.getElementById("cpuspeed2").style.backgroundColor = "green";
+
+     }
+     var oCells = oTable.rows.item(3).cells;
+
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     {
+      document.getElementById("harddisk1").style.backgroundColor = "green";
+     }
+     else if (oCells.item(1).innerHTML = oCells.item(2).innerHTML)
+     {
+      document.getElementById("harddisk2").style.backgroundColor = "green";
+      document.getElementById("harddisk1").style.backgroundColor = "green";
+     }
+     else
+     {
+      document.getElementById("harddisk2").style.backgroundColor = "green";
+
+     }
+     var oCells = oTable.rows.item(4).cells;
+
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     {
+      document.getElementById("storagesize1").style.backgroundColor = "green";
+     }
+     else if (oCells.item(1).innerHTML = oCells.item(2).innerHTML)
+     {
+      document.getElementById("storagesize2").style.backgroundColor = "green";
+      document.getElementById("storagesize1").style.backgroundColor = "green";
+     }
+     else
+     {
+      document.getElementById("storagesize2").style.backgroundColor = "green";
+
+     }
+     var oCells = oTable.rows.item(5).cells;
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     {
+      document.getElementById("port1").style.backgroundColor = "green";
+     }
+     else if (oCells.item(1).innerHTML = oCells.item(2).innerHTML)
+     {
+      document.getElementById("port2").style.backgroundColor = "green";
+      document.getElementById("port1").style.backgroundColor = "green";
+     }
+     else
+     {
+      document.getElementById("port2").style.backgroundColor = "green";
+
+     }
+
+     var oCells = oTable.rows.item(6).cells;
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     {
+      document.getElementById("price1").style.backgroundColor = "green";
+     }
+     else if (oCells.item(1).innerHTML = oCells.item(2).innerHTML)
+     {
+      document.getElementById("price2").style.backgroundColor = "green";
+      document.getElementById("price1").style.backgroundColor = "green";
+     }
+     else
+     {
+      document.getElementById("price2").style.backgroundColor = "green";
+
+     }
+     
+
+     
+     var oCells = oTable.rows.item(7).cells;
+
+     //gets amount of cells of current row
+     var cellLength = oCells.length;
+     if (oCells.item(1).innerHTML > oCells.item(2).innerHTML)
+     {
+      document.getElementById("screensize1").style.backgroundColor = "green";
+     }
+     else if (oCells.item(1).innerHTML = oCells.item(2).innerHTML)
+     {
+      document.getElementById("screensize2").style.backgroundColor = "green";
+      document.getElementById("screensize1").style.backgroundColor = "green";
+     }
+     else
+     {
+      document.getElementById("screensize2").style.backgroundColor = "green";
+
+     }
+  
+</script>
 </body>
 </html>
 
